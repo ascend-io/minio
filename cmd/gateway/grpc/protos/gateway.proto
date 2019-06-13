@@ -1,0 +1,167 @@
+syntax = "proto3";
+
+package miniogrpc;
+
+import "cmd/gateway/grpc/protos/status.proto";
+import "google/protobuf/timestamp.proto";
+
+// Coommon / shared types
+message BucketInfo {
+    string name = 1;
+    google.protobuf.Timestamp created = 2;
+}
+
+message ObjectPartInfo {
+    int32 number = 1;
+    string name = 2;
+    string etag = 3;
+    int64 size = 4;
+    int64 actualSize = 5;
+}
+
+message ObjectInfo {
+    string bucket = 1;
+    string name = 2;
+    google.protobuf.Timestamp modTime = 3;
+    int64 size = 4;
+    bool isDir = 5;
+    string etag = 6;
+    string contentType = 7;
+    google.protobuf.Timestamp expires = 8;
+    string storageClass = 9;
+    map<string, string> userDefined = 10;
+    repeated ObjectPartInfo parts = 11; 
+    google.protobuf.Timestamp accTime = 12;
+}
+
+message RangeSpec {
+    bool isSuffixLength = 1;
+    int64 start = 2;
+    int64 end = 3;
+}
+
+message HeaderValues {
+    repeated string values = 1;
+}
+
+message Headers {
+    map<string, HeaderValues> keys = 1;
+}
+
+message ObjectOptions {
+    // TOOD(cmaloney): ServerSide encryption messaging.
+    map<string, string> userDefined = 2;
+    // TODO(cmaloney): CheckCopyPrecondFn
+}
+
+// Service definition
+service MinIOGateway {
+    rpc Shutdown(ShutdownRequest) returns (ShutdownResponse) {}
+    rpc GetBucketInfo(GetBucketInfoRequest) returns (GetBucketInfoResponse) {}
+    rpc ListBuckets(ListBucketsRequest) returns (ListBucketsResponse) {}
+    rpc ListObjects(ListObjectsRequest) returns (ListObjectsResponse) {}
+    rpc ListObjectsV2(ListObjectsV2Request) returns (ListObjectsV2Response) {}
+    rpc GetObjectNInfo(GetObjectNInfoRequest) returns (GetObjectNInfoResponse) {}
+    // Added so we can stream back bytes
+    // TODO(cmaloney): This RPC api needs to be figured out.
+    // rpc InternalStreamObjectBytes(GetObjectBytesRequest) returns (stream ObjectByteBlock) {}
+    rpc GetObject(GetObjectRequest) returns (GetObjectResponse) {}
+    rpc GetObjectInfo(GetObjectInfoRequest) returns (GetObjectInfoResponse) {}
+    
+    // TODO(cmaloney): Support more calls as required / needed.
+}
+
+
+// Individual request/response type pairs
+message ShutdownRequest{}
+message ShutdownResponse{
+    miniogrpc.Status status = 1;
+}
+
+message GetBucketInfoRequest {
+    string bucket = 1;
+}
+message GetBucketInfoResponse {
+    miniogrpc.Status status = 1;
+    BucketInfo info = 2;
+}
+
+message ListBucketsRequest {}
+message ListBucketsResponse {
+    miniogrpc.Status status = 1;
+    repeated BucketInfo info = 2;
+}
+
+message ListObjectsRequest {
+    string bucket = 1;
+    string prefix = 2;
+    string marker = 3;
+    string delimiter = 4;
+    int64 maxKeys = 5;
+}
+message ListObjectsResponse {
+    miniogrpc.Status status = 1;
+    bool isTruncated = 2;
+    string nextMarker = 3;
+    repeated ObjectInfo objects = 4;
+    repeated string prefixes = 5;
+}
+
+message ListObjectsV2Request {
+    string bucket = 1;
+    string prefix = 2;
+    string continuationToken = 3;
+    string delimiter = 4;
+    int64 maxKeys = 5;
+    bool fetchOwner = 6;
+    string startAfter = 7;
+}
+
+message ListObjectsV2Response {
+    bool isTruncated = 1;
+    string continuationToken = 2;
+    string nextContinuationToken = 3;
+    repeated ObjectInfo objects = 4;
+    repeated string prefixes = 5;
+}
+
+message GetObjectNInfoRequest {
+    string bucket = 1;
+    string object = 2;
+    RangeSpec rangeSpec = 3;
+    Headers headers = 4;
+    int64 lockType = 5; // TOOD: Actually an enum as an int...
+    ObjectOptions options = 6; 
+}
+
+message GetObjectNInfoResponse {
+    miniogrpc.Status status = 1;
+    ObjectInfo objectInfo = 2;
+    // TODO(cmaloney): Enough things to make a object Read() RPC call, read all the bits.
+}
+
+message GetObjectRequest {
+    string bucket = 1;
+    string object = 2;
+    int64 startOffset = 3;
+    int64 endOffset = 4;
+    // TODO(cmaloney): Writer
+    string etag = 5;
+    ObjectOptions options = 6;
+}
+
+message GetObjectResponse {
+    miniogrpc.Status status = 1;
+    // TODO(cmaloney): This needs to stream back data...
+}
+
+message GetObjectInfoRequest {
+    string bucket = 1;
+    string object = 2;
+    ObjectOptions options = 3;
+}
+
+message GetObjectInfoResponse {
+    miniogrpc.Status status = 1;
+    ObjectInfo info = 2;
+}

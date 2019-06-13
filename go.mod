@@ -3,7 +3,7 @@ module github.com/minio/minio
 go 1.12
 
 require (
-	cloud.google.com/go v0.37.2
+	cloud.google.com/go v0.40.0
 	contrib.go.opencensus.io/exporter/ocagent v0.5.0 // indirect
 	github.com/Azure/azure-sdk-for-go v27.0.0+incompatible
 	github.com/Azure/go-autorest v11.7.0+incompatible
@@ -20,13 +20,19 @@ require (
 	github.com/djherbis/atime v1.0.0
 	github.com/dnaeon/go-vcr v1.0.1 // indirect
 	github.com/dustin/go-humanize v1.0.0
+	github.com/eapache/go-resiliency v1.1.0 // indirect
+	github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21 // indirect
+	github.com/eapache/queue v1.1.0 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.1.2-0.20190322152051-20337d8c3947
 	github.com/elazarl/go-bindata-assetfs v1.0.0
 	github.com/fatih/color v1.7.0
 	github.com/fatih/structs v1.1.0
 	github.com/go-sql-driver/mysql v1.4.1
+	github.com/golang/mock v1.3.1 // indirect
 	github.com/golang/snappy v0.0.1
 	github.com/gomodule/redigo v2.0.0+incompatible
+	github.com/google/btree v1.0.0 // indirect
+	github.com/google/pprof v0.0.0-20190515194954-54271f7e092f // indirect
 	github.com/gorilla/handlers v1.4.0
 	github.com/gorilla/mux v1.7.0
 	github.com/gorilla/rpc v1.2.0+incompatible
@@ -34,7 +40,6 @@ require (
 	github.com/hashicorp/go-rootcerts v1.0.1 // indirect
 	github.com/hashicorp/go-sockaddr v1.0.2 // indirect
 	github.com/hashicorp/go-uuid v1.0.1 // indirect
-	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/raft v1.1.0 // indirect
 	github.com/hashicorp/vault v1.1.0
@@ -45,6 +50,7 @@ require (
 	github.com/klauspost/pgzip v1.2.1
 	github.com/klauspost/readahead v1.3.0
 	github.com/klauspost/reedsolomon v1.9.1
+	github.com/kr/pty v1.1.5 // indirect
 	github.com/lib/pq v1.0.0
 	github.com/marstr/guid v1.1.0 // indirect
 	github.com/mattn/go-isatty v0.0.7
@@ -72,6 +78,7 @@ require (
 	github.com/nsqio/go-nsq v1.0.7
 	github.com/pkg/profile v1.3.0
 	github.com/prometheus/client_golang v0.9.3-0.20190127221311-3c4408c8b829
+	github.com/rcrowley/go-metrics v0.0.0-20181016184325-3113b8401b8a // indirect
 	github.com/rjeczalik/notify v0.9.2
 	github.com/rs/cors v1.6.0
 	github.com/ryanuber/go-glob v1.0.0 // indirect
@@ -84,14 +91,23 @@ require (
 	github.com/tidwall/pretty v1.0.0 // indirect
 	github.com/tidwall/sjson v1.0.4
 	github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a
+	go.opencensus.io v0.22.0 // indirect
 	go.uber.org/atomic v1.3.2
-	golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5
-	golang.org/x/lint v0.0.0-20190409202823-959b441ac422 // indirect
-	golang.org/x/net v0.0.0-20190607181551-461777fb6f67
+	golang.org/x/build v0.0.0-20190314133821-5284462c4bec // indirect
+	golang.org/x/crypto v0.0.0-20190611184440-5c40567a22f8
+	golang.org/x/exp v0.0.0-20190510132918-efd6b22b2522 // indirect
+	golang.org/x/image v0.0.0-20190523035834-f03afa92d3ff // indirect
+	golang.org/x/mobile v0.0.0-20190607214518-6fa95d984e88 // indirect
+	golang.org/x/mod v0.1.0 // indirect
+	golang.org/x/net v0.0.0-20190611141213-3f473d35a33a
 	golang.org/x/sys v0.0.0-20190610200419-93c9922d18ae
-	golang.org/x/tools v0.0.0-20190610231749-f8d1dee965f7 // indirect
-	google.golang.org/api v0.4.0
+	golang.org/x/tools v0.0.0-20190612180059-59534d075a87 // indirect
+	google.golang.org/api v0.6.0
+	google.golang.org/appengine v1.6.1 // indirect
+	google.golang.org/genproto v0.0.0-20190611190212-a7e196e89fd3 // indirect
+	google.golang.org/grpc v1.21.1 // indirect
 	gopkg.in/Shopify/sarama.v1 v1.20.0
 	gopkg.in/olivere/elastic.v5 v5.0.80
 	gopkg.in/yaml.v2 v2.2.2
+	honnef.co/go/tools v0.0.0-20190607181801-497c8f037f5a // indirect
 )

@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package miniogrpc;
+
+import "cmd/gateway/grpc/protos/status.proto";
+import "google/protobuf/timestamp.proto";
+
+// Reduced form of IAM for the two calls we care to intercept. Hacked in for now.
+service MinIOIAM {
+    rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+    rpc IsAllowed(IsAllowedRequest) returns (IsAllowedResponse) {}
+}
+
+message GetUserRequest {
+    string accessKey = 1;
+}
+
+message Credentials {
+    string accessKey = 1;
+    string secretKey = 2;
+    google.protobuf.Timestamp expiration = 3;
+    string sessionToken = 4;
+    string status = 5;
+}
+
+message GetUserResponse {
+    miniogrpc.Status status = 1;
+}
+
+message IsAllowedRequest {
+    string accountName = 1;
+    string action = 2;
+    string bucketName = 3;
+    // TODO(cmaloney): ConditionValues conditions = 4;
+    bool isOwner = 5;
+    string objectName = 6;
+    // TOOD(cmaloney): Claims
+}
+message IsAllowedResponse {
+    miniogrpc.Status status = 1;
+    bool isAllowed = 2;
+}

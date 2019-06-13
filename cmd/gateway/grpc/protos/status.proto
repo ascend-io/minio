@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package miniogrpc;
+
+import "google/protobuf/any.proto";
+
+// TODO(cmaloney): This needs to _easily_ map into all the minio specific errors.
+// + easily layer custom ones on top.
+message Status {
+    int32 code = 1;
+    string message = 2;
+    repeated google.protobuf.Any details = 3;
+}

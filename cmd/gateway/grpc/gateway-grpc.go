@@ -97,7 +97,7 @@ func (l *grpcGateway) Shutdown(ctx context.Context) error {
 	return nil
 }
 
-// StorageInfo - Not relevant to GCS backend.
+// StorageInfo - Not relevant to GRPC backend.
 func (l *grpcGateway) StorageInfo(ctx context.Context) minio.StorageInfo {
 	return minio.StorageInfo{}
 }
